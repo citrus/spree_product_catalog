@@ -15,4 +15,7 @@ template "spree_user_error_fix.rb", "config/initializers/spree_user_error_fix.rb
   template "#{ns}/all.css", css, :force => true
 end
 
+# Fix sass load error by using the converted css file
+template "store/screen.css", "app/assets/stylesheets/store/screen.css"
+
 rake "spree_product_catalog:install:migrations"
