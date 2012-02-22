@@ -9,6 +9,7 @@ gem "spree_product_catalog"
 
 ```bash
 bundle install
+rake spree_product_catalog:install:migrations
 ```
 
 

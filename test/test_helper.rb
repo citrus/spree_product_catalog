@@ -4,6 +4,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
 require "shoulda"
+require "paperclip/matchers"
 require "factory_girl"
 require "sqlite3"
 
@@ -21,6 +22,7 @@ class ActionController::TestCase
 end
 
 class ActiveSupport::TestCase
+  extend Paperclip::Shoulda::Matchers
   self.fixture_path = File.expand_path('../fixtures', __FILE__)
   fixtures :all
 end
