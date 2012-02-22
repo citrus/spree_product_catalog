@@ -47,7 +47,7 @@ cp test/dummy_hooks/after_migrate.rb.sample test/dummy_hooks/after_migrate.rb
 bundle install
 bundle exec dummier
 cd test/dummy
-rails s
+ruby script/rails server
 ```
 
 
