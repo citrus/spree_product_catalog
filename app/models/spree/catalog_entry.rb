@@ -10,4 +10,13 @@ class Spree::CatalogEntry < ActiveRecord::Base
   
   validates_attachment_content_type :pdf, :content_type => %w(application/pdf)
 
+  before_validation :set_permalink
+  
+private
+  
+  def set_permalink
+    return if permalink.present? || title.blank?
+    self.permalink = title.parameterize
+  end
+
 end

@@ -12,4 +12,19 @@ class Spree::CatalogEntryTest < ActiveSupport::TestCase
   
   should validate_attachment_content_type(:pdf).allowing('application/pdf').rejecting('image/png', 'image/gif', 'text/plain', 'text/xml')
   
+  context "A new, unsaved catalog entry" do
+    
+    setup do
+      @entry = Spree::CatalogEntry.new(spree_catalog_entries(:one).attributes)
+    end    
+    
+    should "create permalink unless it exists" do
+      @entry.title = "OMG auto-permalinkability!"
+      @entry.permalink = ""
+      assert @entry.valid?
+      assert_equal "omg-auto-permalinkability", @entry.permalink
+    end
+    
+  end
+  
 end

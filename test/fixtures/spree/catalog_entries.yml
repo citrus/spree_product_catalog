@@ -1,0 +1,14 @@
+one:
+  title: Just a catalog entry
+  permalink: just-a-catalog-entry
+  teaser: OMG a catalog entry
+  body: Ok seriously now, it's a catalog entry.
+  position: 1
+  
+two:
+  title: Another catalog entry
+  permalink: another-catalog-entry
+  teaser: OMG another catalog entry
+  body: Ok seriously now, it's another catalog entry.
+  position: 2
+  
