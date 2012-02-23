@@ -1,0 +1,20 @@
+<h1><%= t('.edit_catalog_entry') %></h1>
+
+<% if @catalog_entry.try(:errors).present? %>
+  <%= render 'shared/error_messages', :target => @catalog_entry %>
+<% end %>
+
+<%= form_for([:admin, @catalog_entry], :html => { :multipart => true }) do |f| %>
+    <p>
+      <% if @catalog_entry.image.exists?(:small) %>
+        <b><%= t('.preview') %>:</b><br/>
+        <%= link_to image_tag(@catalog_entry.image.url(:small)), @catalog_entry.image.url(:original) %>
+      <% end %>
+    </p>
+    <%= render "form", :form => f %>
+  </table>
+  <p class="form-buttons">
+    <%= button t("update") %>
+    or <%= link_to t("cancel"), admin_catalog_entries_url, :id => "cancel_link" %>
+  </p>
+<% end %>

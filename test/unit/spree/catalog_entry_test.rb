@@ -15,14 +15,26 @@ class Spree::CatalogEntryTest < ActiveSupport::TestCase
   context "A new, unsaved catalog entry" do
     
     setup do
-      @entry = Spree::CatalogEntry.new(spree_catalog_entries(:one).attributes)
-    end    
+      @entry = Spree::CatalogEntry.new(:title => "Just an entry!")
+    end
     
     should "create permalink unless it exists" do
       @entry.title = "OMG auto-permalinkability!"
       @entry.permalink = ""
       assert @entry.valid?
       assert_equal "omg-auto-permalinkability", @entry.permalink
+    end
+    
+  end
+  
+  context "An existing catalog entry" do
+    
+    setup do
+      @entry = Spree::CatalogEntry.create(:title => "Just an entry!")
+    end    
+    
+    should "return use permalink as to_param" do
+      assert_equal @entry.permalink, @entry.to_param
     end
     
   end

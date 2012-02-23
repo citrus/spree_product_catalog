@@ -7,8 +7,6 @@ require "shoulda"
 require "paperclip/matchers"
 require "factory_girl"
 require "sqlite3"
-
-#require "turn"
   
 ActionMailer::Base.delivery_method    = :test
 ActionMailer::Base.perform_deliveries = true
@@ -16,15 +14,8 @@ ActionMailer::Base.default_url_options[:host] = "example.com"
 
 Rails.backtrace_cleaner.remove_silencers!
 
-# Include devise helpers for controller tests
-class ActionController::TestCase
-  self.fixture_path = File.expand_path('../fixtures', __FILE__)
-end
-
 class ActiveSupport::TestCase
   extend Paperclip::Shoulda::Matchers
-  self.fixture_path = File.expand_path('../fixtures', __FILE__)
-  fixtures :all
 end
 
 # Load support files

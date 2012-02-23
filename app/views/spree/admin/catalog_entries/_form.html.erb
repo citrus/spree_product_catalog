@@ -1,0 +1,59 @@
+<p>
+  <%= form.label :title %><br/>
+  <%= form.text_field :title, :class => 'text title' %>
+</p>
+<p>
+  <%= form.label :permalink %><br/>
+  <%= form.text_field :permalink, :class => 'text' %>
+</p>
+<p>
+  <%= form.label :teaser %><br/>
+  <%= form.text_field :teaser, :class => 'text' %>
+</p>
+<p>
+  <%= form.label :body %><br/>
+  <%= form.text_area :body, :class => 'text' %>
+</p>
+<p>
+  <%= form.label :image %><br/>
+  <%= form.file_field :image %>
+</p>
+<p>
+  <%= form.label :pdf, "PDF" %><br/>
+  <%= form.file_field :pdf %>
+</p>
+<script type="text/javascript">
+//<![CDATA[
+  
+  (function($) {
+
+    function parameterize(string) {
+      return string.toLowerCase().replace(/[^a-z0-9\s\-\_\/]+/g, "").replace(/[\s\-]+/g, "-");
+    }
+
+    var title_field = $("#catalog_entry_title");
+    var permalink_field = $("#catalog_entry_permalink");
+    var permalink = permalink_field.val();
+    
+    if (!permalink.length || permalink == parameterize(title_field.val())) {
+      title_field.keyup(function() {
+        permalink_field.val(parameterize(title_field.val()));
+      });
+    }
+    permalink_field.keyup(function(evt) {
+      console.log(evt);
+      //if (evt.keycode)
+      title_field.unbind('keyup');
+      permalink = permalink_field.val();
+      if (permalink.match(/[^a-z0-9\-\_]+/i)) {
+        evt.preventDefault();
+        permalink = parameterize(permalink)
+        permalink_field.val(permalink);
+      }
+    }).blur(function(evt) {
+      permalink_field.val(permalink.replace(/[\-\_\/]+$/, ""));
+    });
+  })(jQuery);
+  
+//]]>
+</script>

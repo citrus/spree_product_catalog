@@ -1,0 +1,37 @@
+<div class="toolbar" data-hook="toolbar">
+  <ul class="actions">
+    <li id="new_catalog_entry_link">
+      <%= button_link_to t('.new_catalog_entry'), new_object_url %>
+    </li>
+  </ul>
+  <br class="clear" />
+</div>
+
+<h1><%= t('.listing_catalog_entries') %></h1>
+
+<table class="index sortable">
+	<tr>
+	  <th><%= t("thumbnail") %></th>
+	  <th><%= sort_link @search, :title %></th>
+	  <th><%= t("action") %></th>
+	</tr>
+ 
+  <% @catalog_entries.each do |catalog_entry| %>
+    <tr id="<%= dom_id(catalog_entry) %>">
+      <td class="thumbnail">
+        <span class="handle"></span>
+        <% if catalog_entry.image.exists?(:mini) %>
+          <%= link_to image_tag(catalog_entry.image.url(:mini)), admin_catalog_entry_url(catalog_entry) %>
+        <% end %>
+      </td>
+      <td><%= link_to catalog_entry.title, admin_catalog_entry_url(catalog_entry) %></td>
+      <td class="actions">
+        <%= link_to_with_icon('edit', t("edit"), edit_admin_catalog_entry_url(catalog_entry)) %>
+        <%= link_to_delete catalog_entry, {:url => admin_catalog_entry_url(catalog_entry) }%>
+      </td>
+    </tr>
+  <% end %>
+ 
+</table>
+
+<%= paginate @catalog_entries %>

@@ -1,0 +1,6 @@
+en:
+  spree:
+    admin:
+      catalog_entries:
+        index:
+          new_catalog_entry: "New Catalog Entry"

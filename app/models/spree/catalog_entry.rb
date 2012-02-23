@@ -2,7 +2,13 @@ class Spree::CatalogEntry < ActiveRecord::Base
 
   has_and_belongs_to_many :products, :join_table => "spree_catalog_entries_products"
 
-  has_attached_file :image
+  has_attached_file :image,
+    :styles => {
+      :mini   => '48x48>',
+      :small  => '150x150>',
+      :large  => '420x300>'
+    }
+  
   has_attached_file :pdf
   
   validates :title, :permalink, :presence => true
@@ -11,6 +17,10 @@ class Spree::CatalogEntry < ActiveRecord::Base
   validates_attachment_content_type :pdf, :content_type => %w(application/pdf)
 
   before_validation :set_permalink
+  
+  def to_param
+    self.permalink
+  end
   
 private
   

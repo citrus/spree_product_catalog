@@ -1,0 +1,15 @@
+<h1><%= t('.new_catalog_entry') %></h1>
+
+<% if @catalog_entry.try(:errors).present? %>
+  <%= render 'shared/error_messages', :target => @catalog_entry %>
+<% end %>
+
+<%= form_for([:admin, @catalog_entry], :html => { :multipart => true }) do |form| %>
+  <table class="basic-table">
+    <%= render "form", :form => form %>
+  </table>
+  <p class="form-buttons">
+    <%= button t("create") %>
+    or <%= link_to t("cancel"), admin_catalog_entries_path, :id => "cancel_link" %>
+  </p>
+<% end %>
