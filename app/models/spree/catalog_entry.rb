@@ -1,6 +1,6 @@
 class Spree::CatalogEntry < ActiveRecord::Base
 
-  has_and_belongs_to_many :products, :join_table => "spree_catalog_entries_products"
+  has_and_belongs_to_many :products, :join_table => "spree_catalog_entries_products", :class_name => "Spree::Product"
 
   has_attached_file :image,
     :styles => {

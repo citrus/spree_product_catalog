@@ -1,4 +1,5 @@
 require "spree_core"
+require "spree_sample" unless Rails.env.production?
 require "spree_product_catalog/version"
 require "spree_product_catalog/engine"
 

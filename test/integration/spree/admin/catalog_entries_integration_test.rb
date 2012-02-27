@@ -9,7 +9,7 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
   end
   
   should "get the catalog entries index" do
-    visit admin_catalog_entries_path
+    visit spree.admin_catalog_entries_path
     assert has_link?("New Catalog Entry")
     assert_seen "Listing Catalog Entries"
   end
@@ -19,7 +19,7 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
     1.upto(3) { |i|
       Spree::CatalogEntry.create(:title => "Entry ##{i}", :position => i)
     }
-    visit admin_catalog_entries_path
+    visit spree.admin_catalog_entries_path
     within ".pagination" do
       assert has_link?("2")
       click_link "2"
@@ -29,12 +29,12 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
   end
   
   should "create an catalog entry" do
-    visit admin_catalog_entries_path
+    visit spree.admin_catalog_entries_path
     click_link "New Catalog Entry"
     fill_in "Title", :with => "Just an entry"
     attach_file "Image", @image
     click_button "Create"
-    assert_equal admin_catalog_entries_path, current_path
+    assert_equal spree.admin_catalog_entries_path, current_path
     assert_flash "Catalog entry has been successfully created!"
   end
   
@@ -45,27 +45,27 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
     end
   
     should "display the index" do
-      visit admin_catalog_entries_path
+      visit spree.admin_catalog_entries_path
       assert has_link?(@catalog_entry.title)
       assert_seen "Just an entry!", :within => "tr#spree_catalog_entry_#{@catalog_entry.id}"
       within "td.actions" do
-        assert find("a.icon_link").native.attribute("href").include?(edit_admin_catalog_entry_path(@catalog_entry))
+        assert find("a.icon_link").native.attribute("href").include?(spree.edit_admin_catalog_entry_path(@catalog_entry))
         assert has_selector?("a[href='#']")
       end
     end
     
     should "edit the catalog entry" do
-      visit edit_admin_catalog_entry_path(@catalog_entry)
+      visit spree.edit_admin_catalog_entry_path(@catalog_entry)
       assert_seen "Preview", :within => ".edit_spree_catalog_entry p b"
       assert has_xpath?("//img[@src='#{@catalog_entry.image.url(:small)}']")
       fill_in "Title", :with => "Just another image"
       click_button "Update"
-      assert_equal admin_catalog_entries_path, current_path
+      assert_equal spree.admin_catalog_entries_path, current_path
       assert_flash "Catalog entry has been successfully updated!"
     end
   
     should "destroy the catalog entry" do
-      visit admin_catalog_entries_path
+      visit spree.admin_catalog_entries_path
       find(".actions a[href='#']").click
       find_by_id("popup_ok").click              
     end
