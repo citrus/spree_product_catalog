@@ -4,3 +4,6 @@ en:
       catalog_entries:
         index:
           new_catalog_entry: "New Catalog Entry"
+
+      subnav:
+        product_catalog: "Product Catalog"

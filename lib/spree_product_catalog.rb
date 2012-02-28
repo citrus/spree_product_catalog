@@ -6,11 +6,11 @@ require "spree_product_catalog/engine"
 module SpreeProductCatalog
   
   def self.tab
-    { :label => 'Product Catalog', :route => :admin_product_catalog_entries }
+    { :label => 'Product Catalog', :route => :admin_catalog_entries }
   end
   
   def self.sub_tab
-    [:product_catalog, { :route => :admin_product_catalog_entries, :label => 'spree.admin.subnav.product_catalog', :match_path => '/catalog_entries' }]
+    [:product_catalog, { :route => :admin_catalog_entries, :label => 'spree.admin.subnav.product_catalog', :match_path => '/catalog_entries' }]
   end
   
   def self.independent?
