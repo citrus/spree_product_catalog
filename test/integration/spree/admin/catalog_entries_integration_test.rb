@@ -46,8 +46,7 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
   
     should "display the index" do
       visit spree.admin_catalog_entries_path
-      assert has_link?(@catalog_entry.title)
-      assert_seen "Just an entry!", :within => "tr#spree_catalog_entry_#{@catalog_entry.id}"
+      assert_seen @catalog_entry.title, :within => "tr#spree_catalog_entry_#{@catalog_entry.id}"
       within "td.actions" do
         assert find("a.icon_link").native.attribute("href").include?(spree.edit_admin_catalog_entry_path(@catalog_entry))
         assert has_selector?("a[href='#']")
@@ -77,8 +76,9 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
       end
       
       should "add a linked product" do
-        visit spree.admin_catalog_entry_path(@catalog_entry)
-        assert_difference "@catalog_entry.products.count", +1 do
+        @catalog_entry.products.destroy_all
+        visit spree.edit_admin_catalog_entry_path(@catalog_entry)
+        assert_difference "@catalog_entry.products.reload.count", +1 do
           within "#unlinked-products" do
             click_link "+"
           end
@@ -86,16 +86,16 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
       end
       
       should "fail to link product when product not found" do
-        assert_no_difference "@catalog_entry.products.count" do
+        assert_no_difference "@catalog_entry.products.reload.count" do
           visit spree.admin_catalog_entry_product_path(@catalog_entry, "non-existent-product", "add")   
         end
-        assert_equal spree.admin_catalog_entry_path(@catalog_entry), current_path
+        assert_equal spree.edit_admin_catalog_entry_path(@catalog_entry), current_path
       end
       
       should "remove a linked product" do
-        @catalog_entry.products = [ Factory(:product) ]
-        visit spree.admin_catalog_entry_path(@catalog_entry)
-        assert_difference "@catalog_entry.products.count", -1 do
+        @catalog_entry.products = [ @product ]
+        visit spree.edit_admin_catalog_entry_path(@catalog_entry)
+        assert_difference "@catalog_entry.products.reload.count", -1 do
           within "#linked-products" do
             click_link "x"
           end
@@ -103,10 +103,10 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
       end
             
       should "fail to unlink product when product not found" do
-        assert_no_difference "@catalog_entry.products.count" do
+        assert_no_difference "@catalog_entry.products.reload.count" do
           visit spree.admin_catalog_entry_product_path(@catalog_entry, "non-existant-product", "remove")
         end
-        assert_equal spree.admin_catalog_entry_path(@catalog_entry), current_path
+        assert_equal spree.edit_admin_catalog_entry_path(@catalog_entry), current_path
       end
     
     end

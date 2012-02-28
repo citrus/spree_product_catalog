@@ -1,0 +1,37 @@
+<% content_for :sidebar do %>
+  <div data-hook="catalog_entries_sidebar">
+    <%= render :partial => 'spree/shared/taxonomies' %>
+  </div>
+<% end %>
+
+<div id="breadcrumbs">
+  <ul class="inline">
+    <li><%= link_to "Home", root_path %>&nbsp;&raquo;&nbsp;</li>
+    <li><%= link_to "Product Catalog", catalog_entries_path %>&nbsp;&raquo;&nbsp;</li>
+    <li><%= @catalog_entry.title %></li>
+  </ul>
+</div>
+
+<h2><%= @catalog_entry.title %></h2>
+
+<div class="row">
+  <div class="four columns">
+    <% if @catalog_entry.image.exists?(:large) %>
+      <div class="catalog-entry-image">
+        <%= image_tag @catalog_entry.image.url(:large), :alt => @catalog_entry.title %>
+      </div>
+    <% end %>    
+    <% if @catalog_entry.pdf.exists? %>
+      <p><%= link_to "Download PDF", @catalog_entry.pdf.url %></p>
+    <% end %>
+  </div>
+  <div class="six columns">
+    <%= simple_format @catalog_entry.body %>
+  </div>
+</div>
+
+<br class="clear"/>
+
+<div data-hook="catalog_entry_products">
+  <%= render :partial => 'spree/shared/products', :locals => { :products => @products, :taxon => @taxon } %>
+</div>

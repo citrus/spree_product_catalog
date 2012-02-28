@@ -1,0 +1,9 @@
+<% content_for :sidebar do %>
+  <div data-hook="catalog_entries_sidebar">
+    <%= render :partial => 'spree/shared/taxonomies' %>
+  </div>
+<% end %>
+
+<div data-hook="catalog_entries">
+  <%= render :partial => "spree/catalog_entries/preview", :collection => @catalog_entries, :as => :catalog_entry %>
+</div>

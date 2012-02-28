@@ -1,0 +1,27 @@
+<div class="catalog-entry five columns">
+
+  <h3>
+    <% if catalog_entry.products.empty? %>
+      <%= catalog_entry.title %>
+    <% else %>
+      <%= link_to catalog_entry.title, catalog_entry_path(catalog_entry) %>
+    <% end %>
+  </h3>
+  
+  <% unless catalog_entry.teaser.blank? %>
+    <h5><%= catalog_entry.teaser %></h5>
+  <% end %>
+  
+  <% if catalog_entry.image.exists?(:small) %>
+    <div class="catalog-entry-image">
+      <%= image_tag catalog_entry.image.url(:small), :alt => catalog_entry.title %>
+    </div>
+  <% end %>
+  
+  <%= simple_format catalog_entry.body %>
+  
+  <% unless catalog_entry.products.empty? %>
+    <p><%= link_to "Browse Products", catalog_entry_path(catalog_entry) %></p>
+  <% end %>
+
+</div>

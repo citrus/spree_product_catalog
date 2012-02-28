@@ -1,7 +1,12 @@
+.edit-product-form {
+  width: 350px;
+  float: left;
+}
 .select-products {
   display: block;
   width: auto;
   float: left;
+  margin-bottom: 20px;
 }
 .select-products h3 {
   font-size: 15px;
@@ -9,14 +14,14 @@
 }
 .select-product-list {
   display: block;
-  height: 180px;
+  height: 400px;
   list-style-type: none;
   padding: 0;
   margin: 0 20px 0 0;
   border: 1px solid #ddd;
   background-color: #f9f9f9;
-  min-width: 200px;
-  overflow: scroll;
+  min-width: 230px;
+  overflow: auto;
 }
 .select-product-list li {
   padding: 2px 5px;

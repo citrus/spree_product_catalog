@@ -6,6 +6,6 @@ Spree::Core::Engine.routes.append do
     end
   end
 
-  get "/product-catalog" => "catalog_entries#index", :as => :catalog_entries
+  resources :catalog_entries, :path => "product-catalog"
 
 end

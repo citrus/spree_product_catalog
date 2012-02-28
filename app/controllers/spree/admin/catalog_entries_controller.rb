@@ -1,6 +1,6 @@
 class Spree::Admin::CatalogEntriesController < Spree::Admin::ResourceController
   
-  before_filter :get_unlinked_products, :only => :show
+  before_filter :get_unlinked_products, :only => :edit
   
   def link
     @catalog_entry = Spree::CatalogEntry.find_by_permalink(params[:catalog_entry_id])
@@ -15,9 +15,9 @@ class Spree::Admin::CatalogEntriesController < Spree::Admin::ResourceController
       return render(:partial => "spree/admin/catalog_entries/link", :locals => { :action => opposite_behavior, :product => @product }) if request.xhr?
       set_flash_message(params[:behavior])
     end
-    redirect_to admin_catalog_entry_path(@catalog_entry)
+    redirect_to edit_admin_catalog_entry_path(@catalog_entry)
   end
-    
+      
 private
   
   def opposite_behavior

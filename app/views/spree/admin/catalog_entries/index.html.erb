@@ -21,10 +21,10 @@
       <td class="thumbnail">
         <span class="handle"></span>
         <% if catalog_entry.image.exists?(:mini) %>
-          <%= link_to image_tag(catalog_entry.image.url(:mini)), admin_catalog_entry_url(catalog_entry) %>
+          <%= image_tag(catalog_entry.image.url(:mini)) %>
         <% end %>
       </td>
-      <td><%= link_to catalog_entry.title, admin_catalog_entry_url(catalog_entry) %></td>
+      <td><%= catalog_entry.title %></td>
       <td class="actions">
         <%= link_to_with_icon('edit', t("edit"), edit_admin_catalog_entry_url(catalog_entry)) %>
         <%= link_to_delete catalog_entry, {:url => admin_catalog_entry_url(catalog_entry) }%>
