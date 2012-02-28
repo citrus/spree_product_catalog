@@ -1,0 +1,5 @@
+<% action ||= "add" %>
+<li>
+  <%= link_to action == "add" ? "+" : "x", admin_catalog_entry_product_path(@catalog_entry, product, action) %>
+  <%= product.name %>
+</li>

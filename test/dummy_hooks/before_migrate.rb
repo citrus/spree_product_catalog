@@ -9,10 +9,8 @@ template "spree_user_error_fix.rb", "config/initializers/spree_user_error_fix.rb
 
 # remove all stylesheets except core  
 %w(admin store).each do |ns|
-  js  = "app/assets/javascripts/#{ns}/all.js"
-  css = "app/assets/stylesheets/#{ns}/all.css"
-  template "#{ns}/all.js", js,   :force => true
-  template "#{ns}/all.css", css, :force => true
+  template "#{ns}/all.js", "app/assets/javascripts/#{ns}/all.js",   :force => true
+  template "#{ns}/all.css", "app/assets/stylesheets/#{ns}/all.css", :force => true
 end
 
 # Fix sass load error by using the converted css file

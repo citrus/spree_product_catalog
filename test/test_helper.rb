@@ -9,6 +9,10 @@ require "factory_girl"
 require "sqlite3"
 require "ffaker"
 
+require "spree/core/testing_support/factories/product_factory"
+require "spree/core/testing_support/factories/tax_category_factory"
+require "spree/core/testing_support/factories/shipping_category_factory"
+
 ActionMailer::Base.delivery_method    = :test
 ActionMailer::Base.perform_deliveries = true
 ActionMailer::Base.default_url_options[:host] = "example.com"

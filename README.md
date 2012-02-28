@@ -19,6 +19,20 @@ rake spree_product_catalog:install:migrations
 ```
 
 
+In production mode, make sure `admin/catalog_entry.css` is added to the asset precompile list:
+
+```ruby
+# config/application.rb
+module MySpreeStore
+  class Application < Rails::Application
+  
+    config.assets.precompile += %w(admin/catalog_entry.css)
+
+  end
+end
+```
+
+
 ------------------------------------------------------------------------------
 Testing
 ------------------------------------------------------------------------------

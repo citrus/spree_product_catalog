@@ -63,14 +63,54 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
       assert_equal spree.admin_catalog_entries_path, current_path
       assert_flash "Catalog entry has been successfully updated!"
     end
-  
+    
     should "destroy the catalog entry" do
       visit spree.admin_catalog_entries_path
       find(".actions a[href='#']").click
       find_by_id("popup_ok").click              
     end
     
+    context "with an existing product" do
+      
+      setup do
+        @product = Factory(:product)
+      end
+      
+      should "add a linked product" do
+        visit spree.admin_catalog_entry_path(@catalog_entry)
+        assert_difference "@catalog_entry.products.count", +1 do
+          within "#unlinked-products" do
+            click_link "+"
+          end
+        end
+      end
+      
+      should "fail to link product when product not found" do
+        assert_no_difference "@catalog_entry.products.count" do
+          visit spree.admin_catalog_entry_product_path(@catalog_entry, "non-existent-product", "add")   
+        end
+        assert_equal spree.admin_catalog_entry_path(@catalog_entry), current_path
+      end
+      
+      should "remove a linked product" do
+        @catalog_entry.products = [ Factory(:product) ]
+        visit spree.admin_catalog_entry_path(@catalog_entry)
+        assert_difference "@catalog_entry.products.count", -1 do
+          within "#linked-products" do
+            click_link "x"
+          end
+        end
+      end
+            
+      should "fail to unlink product when product not found" do
+        assert_no_difference "@catalog_entry.products.count" do
+          visit spree.admin_catalog_entry_product_path(@catalog_entry, "non-existant-product", "remove")
+        end
+        assert_equal spree.admin_catalog_entry_path(@catalog_entry), current_path
+      end
+    
+    end
+        
   end
-  
   
 end
