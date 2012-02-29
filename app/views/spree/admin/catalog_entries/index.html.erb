@@ -9,7 +9,7 @@
 
 <h1><%= t('.listing_catalog_entries') %></h1>
 
-<table class="index sortable">
+<table class="index sortable" data-sortable-link="<%= update_positions_admin_catalog_entries_path %>">
 	<tr>
 	  <th><%= t("thumbnail") %></th>
 	  <th><%= sort_link @search, :title %></th>

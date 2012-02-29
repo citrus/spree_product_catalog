@@ -28,14 +28,25 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
     assert_match /page\=2/, current_url
   end
   
-  should "create an catalog entry" do
+  should "create a catalog entry" do
     visit spree.admin_catalog_entries_path
     click_link "New Catalog Entry"
     fill_in "Title", :with => "Just an entry"
     attach_file "Image", @image
     click_button "Create"
-    assert_equal spree.admin_catalog_entries_path, current_path
+    assert_equal spree.edit_admin_catalog_entry_path(Spree::CatalogEntry.last), current_path
     assert_flash "Catalog entry has been successfully created!"
+  end
+  
+  should "fail to create a catalog entry" do
+    visit spree.admin_catalog_entries_path
+    click_link "New Catalog Entry"
+    click_button "Create"
+    assert_response :success
+    within ".errorExplanation" do
+      assert_seen "Title can't be blank"
+      assert_seen "Permalink can't be blank"
+    end
   end
   
   context "with an existing catalog entry" do
@@ -93,7 +104,7 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
       end
       
       should "remove a linked product" do
-        @catalog_entry.products = [ @product ]
+        @catalog_entry.update_attribute(:products, [ @product ])
         visit spree.edit_admin_catalog_entry_path(@catalog_entry)
         assert_difference "@catalog_entry.products.reload.count", -1 do
           within "#linked-products" do
@@ -101,7 +112,7 @@ class Spree::Admin::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCa
           end
         end
       end
-            
+      
       should "fail to unlink product when product not found" do
         assert_no_difference "@catalog_entry.products.reload.count" do
           visit spree.admin_catalog_entry_product_path(@catalog_entry, "non-existant-product", "remove")

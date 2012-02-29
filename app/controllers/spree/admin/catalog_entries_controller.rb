@@ -17,8 +17,26 @@ class Spree::Admin::CatalogEntriesController < Spree::Admin::ResourceController
     end
     redirect_to edit_admin_catalog_entry_path(@catalog_entry)
   end
+  
+  def update_positions
+    params[:positions].each do |id, index|
+      Spree::CatalogEntry.where(:id => id).update_all(:position => index)
+    end
+    respond_to do |format|
+      format.html { redirect_to admin_catalog_entries_url }
+      format.js  { render :text => 'Ok' }
+    end
+  end
       
 private
+
+  def location_after_save
+    if params[:action] == "create"
+      edit_object_url(@catalog_entry)
+    else
+      collection_url
+    end
+  end
   
   def opposite_behavior
     params[:behavior] == "add" ? "remove" : "add"

@@ -10,10 +10,22 @@ class Spree::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCase
     @product = Factory(:product)
   end
   
-  should "get the catalog entries index" do
+  should "get index and paginate catalog entries" do
+    1.upto(3) {|i|
+      Spree::CatalogEntry.create(:title => "Entry ##{i}!")  
+    }
+    Spree::Config.set(:products_per_page => 2)
     visit spree.catalog_entries_path
-    assert_seen @entry.title
-    assert has_xpath?("//img[@src='#{@entry.image.url(:small)}']")
+    within ".catalog-entry" do
+      assert_seen @entry.title
+      assert has_xpath?("//img[@src='#{@entry.image.url(:small)}']")
+    end
+    within ".pagination" do
+      assert has_link?("2")
+      click_link "2"
+    end
+    assert_seen "Entry #3!"
+    assert_match /page\=2/, current_url
   end
   
   should "get the catalog entry show page" do
@@ -23,10 +35,18 @@ class Spree::CatalogEntriesIntegrationTest < ActiveSupport::IntegrationCase
     assert has_xpath?("//a[@href='#{@entry.pdf.url}']")
   end
   
-  should "show products linked to catalog entry" do
-    @entry.products << @product
+  should "show and paginate products linked to catalog entry" do
+    3.times {
+      @entry.products << Factory(:product)
+    }
     visit spree.catalog_entry_path(@entry)
-    assert_seen @product.name
+    assert_seen @entry.title, :within => "#content h2"
+    assert_seen  @entry.products.first.name, :within => "#products"
+    within ".pagination" do
+      assert has_link?("2")
+      click_link "2"
+    end
+    assert_seen @entry.products.last.name, :within => "#products"
   end
   
 end

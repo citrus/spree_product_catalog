@@ -7,3 +7,5 @@
 <div data-hook="catalog_entries">
   <%= render :partial => "spree/catalog_entries/preview", :collection => @catalog_entries, :as => :catalog_entry %>
 </div>
+
+<%= paginate @catalog_entries %>

@@ -25,6 +25,14 @@ class Spree::CatalogEntryTest < ActiveSupport::TestCase
       assert_equal "omg-auto-permalinkability", @entry.permalink
     end
     
+    should "set position to last" do
+      3.times {|i|
+        Spree::CatalogEntry.create(:title => "Just an entry #{i}!")
+      }
+      @entry.save
+      assert_equal Spree::CatalogEntry.order(:position).last, @entry
+    end
+    
   end
   
   context "An existing catalog entry" do

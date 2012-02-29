@@ -1,7 +1,7 @@
 <h1><%= t('.new_catalog_entry') %></h1>
 
 <% if @catalog_entry.try(:errors).present? %>
-  <%= render 'shared/error_messages', :target => @catalog_entry %>
+  <%= render 'spree/shared/error_messages', :target => @catalog_entry %>
 <% end %>
 
 <%= form_for([:admin, @catalog_entry], :html => { :multipart => true }) do |form| %>

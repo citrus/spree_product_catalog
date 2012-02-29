@@ -7,8 +7,8 @@
   <%= form.text_field :permalink, :class => 'text' %>
 </p>
 <p>
-  <%= form.label :teaser %><br/>
-  <%= form.text_field :teaser, :class => 'text' %>
+  <%= form.label :teaser %> <i class="small quiet">max 250 characters</i><br/>
+  <%= form.text_area :teaser, :class => 'text short', :style => "height: 3em;" %>
 </p>
 <p>
   <%= form.label :body %><br/>
