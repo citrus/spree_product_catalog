@@ -4,6 +4,10 @@ module SpreeProductCatalog
 
     config.autoload_paths += %W(#{config.root}/lib)
 
+    initializer :assets do |config| 
+      Rails.application.config.assets.precompile += %w( admin/catalog_entry.css )
+    end
+
     config.to_prepare do
       
       # loads application's model / class decorators
